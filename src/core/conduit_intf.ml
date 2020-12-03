@@ -68,10 +68,6 @@ module type FLOW = sig
   (** [close flow] closes [flow]. Subsequent calls to {!recv} on [flow] will
       return [`End_of_flow]. Subsequent calls to {!send} on [t] will return an
       [Error]. *)
-end
-
-module type PROTOCOL = sig
-  include FLOW
 
   type endpoint
 
@@ -183,15 +179,8 @@ module type S = sig
        and type output = output
        and type +'a io = 'a io
 
-  (** A protocol is a {!FLOW} plus [connect]. *)
-  module type PROTOCOL =
-    PROTOCOL
-      with type input = input
-       and type output = output
-       and type +'a io = 'a io
-
   type ('edn, 'flow) impl =
-    (module PROTOCOL with type endpoint = 'edn and type flow = 'flow)
+    (module FLOW with type endpoint = 'edn and type flow = 'flow)
   (** The type to represent a module {!PROTOCOL}. *)
 
   type ('edn, 'flow) protocol
@@ -529,11 +518,6 @@ module type Conduit = sig
 
   module type FLOW = sig
     include FLOW
-    (** @inline *)
-  end
-
-  module type PROTOCOL = sig
-    include PROTOCOL
     (** @inline *)
   end
 

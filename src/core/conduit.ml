@@ -103,12 +103,6 @@ module Make (IO : IO) (Input : BUFFER) (Output : BUFFER) :
 
   type output = Output.t
 
-  module type PROTOCOL =
-    PROTOCOL
-      with type input = input
-       and type output = output
-       and type +'a io = 'a io
-
   module type FLOW =
     FLOW
       with type input = input
@@ -116,7 +110,7 @@ module Make (IO : IO) (Input : BUFFER) (Output : BUFFER) :
        and type +'a io = 'a io
 
   type ('edn, 'flow) impl =
-    (module PROTOCOL with type endpoint = 'edn and type flow = 'flow)
+    (module FLOW with type endpoint = 'edn and type flow = 'flow)
 
   type 'edn key = ('edn * scheduler) Map.key
 
@@ -356,7 +350,7 @@ module Make (IO : IO) (Input : BUFFER) (Output : BUFFER) :
   let impl :
       type edn flow.
       (edn, flow) protocol ->
-      (module PROTOCOL with type endpoint = edn and type flow = flow) =
+      (module FLOW with type endpoint = edn and type flow = flow) =
    fun { protocol = (module Witness); _ } ->
     let (Protocol (_, _, (module Protocol))) = Witness.witness in
     (module Protocol)

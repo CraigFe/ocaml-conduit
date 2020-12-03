@@ -46,7 +46,7 @@ struct
     | Some tls -> Tls.Engine.handshake_in_progress tls
     | None -> false
 
-  module Make_protocol (Flow : Conduit.PROTOCOL) = struct
+  module Make_protocol (Flow : Conduit.FLOW) = struct
     type input = Conduit.input
 
     type output = Conduit.output

@@ -61,7 +61,7 @@ module TCP : sig
 
   module Protocol : sig
     include
-      PROTOCOL
+      FLOW
         with type endpoint = Lwt_unix.sockaddr
          and type error =
               [ `Closed_by_peer

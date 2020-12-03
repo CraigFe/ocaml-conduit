@@ -78,7 +78,7 @@ type 'flow with_ssl = {
 }
 
 module Protocol (Protocol : sig
-  include Conduit_async.PROTOCOL
+  include Conduit_async.FLOW
 
   val reader : flow -> Reader.t
 

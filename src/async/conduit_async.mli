@@ -41,7 +41,7 @@ module TCP : sig
     | Unix of Socket.Address.Unix.t
 
   module Protocol : sig
-    include PROTOCOL with type endpoint = endpoint
+    include FLOW with type endpoint = endpoint
 
     val address : flow -> Socket.Address.t
 

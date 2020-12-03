@@ -25,7 +25,7 @@ let endpoint ~file_descr ~context ?verify endpoint =
 
 let pf = Format.fprintf
 
-module Protocol (Flow : Conduit_lwt.PROTOCOL) = struct
+module Protocol (Flow : Conduit_lwt.FLOW) = struct
   type input = Cstruct.t
 
   type output = Cstruct.t
